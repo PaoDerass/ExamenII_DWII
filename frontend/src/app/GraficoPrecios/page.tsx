@@ -25,8 +25,19 @@ ChartJS.register(
     Legend
 );
 
+interface DatosGrafico {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        borderColor: string;
+        backgroundColor: string;
+        fill: boolean;
+    }[];
+}
+
 export default function page() {
-    const [infoGrafico, setInfoGrafico] = useState({
+    const [infoGrafico, setInfoGrafico] = useState<DatosGrafico>({
         labels: [],
         datasets: [
             {
@@ -46,8 +57,8 @@ export default function page() {
             .then(informacion => {
                 console.log('Info recibida:', informacion);
                 
-                const categoriasNombres = informacion.map((elemento: any) => elemento.categoryCode);
-                const valoresPrecios = informacion.map((elemento: any) => parseFloat(elemento.precio_promedio));
+                const categoriasNombres: string[] = informacion.map((elemento: any) => elemento.categoryCode);
+                const valoresPrecios: number[] = informacion.map((elemento: any) => parseFloat(elemento.precio_promedio));
 
                 setInfoGrafico({
                     labels: categoriasNombres,

@@ -13,8 +13,19 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+interface DatosGraficoPie {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        backgroundColor: string[];
+        borderColor: string[];
+        borderWidth: number;
+    }[];
+}
+
 export default function page() {
-    const [infoGrafico, setInfoGrafico] = useState({
+    const [infoGrafico, setInfoGrafico] = useState<DatosGraficoPie>({
         labels: [],
         datasets: [
             {
@@ -29,8 +40,8 @@ export default function page() {
 
     const [estaCargando, setEstaCargando] = useState(true);
 
-    // Paleta de colores para el grafico circular
-    const coloresRelleno = [
+
+    const coloresRelleno: string[] = [
         'rgba(255, 99, 132, 0.8)',
         'rgba(54, 162, 235, 0.8)',
         'rgba(255, 205, 86, 0.8)',
@@ -43,7 +54,7 @@ export default function page() {
         'rgba(99, 255, 132, 0.8)'
     ];
 
-    const coloresLinea = [
+    const coloresLinea: string[] = [
         'rgba(255, 99, 132, 1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 205, 86, 1)',
@@ -61,8 +72,8 @@ export default function page() {
             .then(informacion => {
                 console.log('Info recibida:', informacion);
                 
-                const nombresMarcas = informacion.map((elemento: any) => elemento.brandCode);
-                const cantidadItems = informacion.map((elemento: any) => parseInt(elemento.cantidad));
+                const nombresMarcas: string[] = informacion.map((elemento: any) => elemento.brandCode);
+                const cantidadItems: number[] = informacion.map((elemento: any) => parseInt(elemento.cantidad));
 
                 setInfoGrafico({
                     labels: nombresMarcas,
